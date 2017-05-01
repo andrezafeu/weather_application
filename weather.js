@@ -21,8 +21,15 @@ function getWeather(location) {
                                         response.on('end', () => {
                                             try {
                                                 const weather = JSON.parse(body)
-                                                printMessage(weather.name, weather.weather[0].main, weather.main.temp)
+                                                // Check if location was found
+                                                if (location === weather.name ) {
+                                                    printMessage(weather.name, weather.weather[0].main, weather.main.temp)
+                                                } else {
+                                                    const queryError = new Error(`The location "${location}" was not found`);
+                                                    printError(queryError);
+                                                }
                                             } catch (error) {
+                                                // Parse error
                                                 printError(error);
                                             }
                                         });
